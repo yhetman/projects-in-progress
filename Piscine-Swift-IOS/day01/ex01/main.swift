@@ -1,0 +1,30 @@
+
+print("\n\n\t\tEX01\n")
+
+let card1 : Card = Card(color: Color.Heart, value: Value.King)
+let card2 : Card = Card(color: Color.Diamond, value: Value.Queen)
+let card3 : Card = Card(color: Color.Club, value: Value.Ace)
+let card4 : Card = Card(color: Color.Heart, value: Value.King)
+
+print("Our cards:")
+print("card 1 is \(card1)")
+print("card 2 is \(card2)")
+print("card 3 is \(card3)")
+print("card 4 is \(card4)")
+
+print("EQUALITY TESTS")
+print("Check if card 1 is equal to card 2")
+print(card1.isEqual(card2))
+print("Check if card 1 is equal to card 3")
+print(card1.isEqual(card3))
+print("Check if card 1 is equal to card 4")
+print(card1.isEqual(card4))
+
+print("")
+print("Tests for == :")
+print("Check if card 1 is equal to card 2")
+print(card1 == card2)
+print("Check if card 1 is equal to card 3")
+print(card1 == card3)
+print("Check if card 1 is equal to card 4")
+print(card1 == card4)
