@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <string.h>
 #define 	MAX_LENGTH 	30
-//#define 	_GNU_SOURCE
 #define 	WORD_CHARS 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`'-@1234567890"
 
 static char			*ft_strsub(char const *s, unsigned int start, size_t len)
@@ -74,7 +73,7 @@ void				ft_free_grid(char **line)
 		free(line[i]);
 }
 
-char 				**find_unique_words(char **array_of_strs, int size)
+static char 		**find_unique_words(char **array_of_strs, int size)
 {
 	int 			i,
 					j,
@@ -104,7 +103,7 @@ char 				**find_unique_words(char **array_of_strs, int size)
     return(unique_words);
 }
 
-char				**find_unique_words_parser(char const *s)
+static char			**find_unique_words_parser(char const *s)
 {
 	char			**splited_str;
 	unsigned int	i,
@@ -139,7 +138,7 @@ char				**find_unique_words_parser(char const *s)
 }
 
 
-char 				*read_file(char *argv)
+static char 		*read_file(char *argv)
 {
 	char 			*file;
     FILE			*fd;
