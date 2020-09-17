@@ -19,5 +19,5 @@
 
 ### Usage:
 --------
-'''gcc -o first_lab unique-words.c find_unique_words_parser.c'''
-'''./first_lab [text-file]'''
+'gcc -o first_lab unique-words.c find_unique_words_parser.c'
+'./first_lab [text-file]'
