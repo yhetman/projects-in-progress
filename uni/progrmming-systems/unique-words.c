@@ -139,31 +139,47 @@ char				**find_unique_words_parser(char const *s)
 }
 
 
-char *read_file()
-int					main(int argc, char **argv)
+char 				*read_file(char *argv)
 {
+	char 			*file;
     FILE			*fd;
-    char			**unique_words,
-    	 			*string;
-    int 			i =0;
 
-    if (!(fd = fopen(argv[1], "r")))
-        return(write(2, "No file", 8));
-
+	if (!(fd = fopen(argv, "r")))
+        return (NULL);
 	fseek(fd, 0, SEEK_END);
 	long fsize = ftell(fd);
 	fseek(fd, 0, SEEK_SET);
 
-	string = malloc(fsize + 1);
-	fread(string, 1, fsize, fd);
+	file = malloc(fsize + 1);
+	fread(file, 1, fsize, fd);
 	fclose(fd);
+	file[fsize] = 0;
+	return (file);
+}
+int					main(int argc, char **argv)
+{
+//    FILE			*fd;
+    char			**unique_words,
+    	 			*file;
+    int 			i =0;
 
-	string[fsize] = 0;
-    unique_words = find_unique_words_parser(string);
+//    if (!(fd = fopen(argv[1], "r")))
+//        return (write(2, "No file", 8));
+//
+//	fseek(fd, 0, SEEK_END);
+//	long fsize = ftell(fd);
+//	fseek(fd, 0, SEEK_SET);
+//
+//	string = malloc(fsize + 1);
+//    fread(string, 1, fsize, fd);
+//	fclose(fd);
+    if(!(file = read_file(argv[1])))
+    	return (write(2, "No file", 8));
+    unique_words = find_unique_words_parser(file);
     while (unique_words[i])
-        printf("Retrieved line of length %zu: unique words: %s\n", fsize, unique_words[i++]);
-    if (string)
-        free(string);
+        printf("Retrieved line of length %zu: unique words: %s\n", strlen(file), unique_words[i++]);
+    if (file)
+        free(file);
     exit(EXIT_SUCCESS);
 }
 
