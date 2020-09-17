@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unique-words.c                                     :+:      :+:    :+:   */
+/*   find_unique_words_parser.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yhetman <yhetman@student.unit.ua>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 23:14:13 by yhetman           #+#    #+#             */
+/*   Created: 2020/09/16 12:22:13 by yhetman           #+#    #+#             */
 /*   Updated: 2020/09/16 23:56:43 by yhetman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#define 	MAX_LENGTH 	30
-#define 	WORD_CHARS 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`'-@1234567890"
+#include "header.h"
 
 static char			*ft_strsub(char const *s, unsigned int start, size_t len)
 {
@@ -103,7 +98,7 @@ static char 		**find_unique_words(char **array_of_strs, int size)
     return(unique_words);
 }
 
-static char			**find_unique_words_parser(char const *s)
+char			**find_unique_words_parser(char const *s)
 {
 	char			**splited_str;
 	unsigned int	i,
@@ -136,43 +131,3 @@ static char			**find_unique_words_parser(char const *s)
 	splited_str[j] = NULL;
 	return (find_unique_words(splited_str, amount_of_words));
 }
-
-
-static char 		*read_file(char *argv)
-{
-	char 			*file;
-    FILE			*fd;
-
-	if (!(fd = fopen(argv, "r")))
-        return (NULL);
-	fseek(fd, 0, SEEK_END);
-	long fsize = ftell(fd);
-	fseek(fd, 0, SEEK_SET);
-
-	file = malloc(fsize + 1);
-	fread(file, 1, fsize, fd);
-	fclose(fd);
-	file[fsize] = 0;
-	return (file);
-}
-
-
-int					main(int argc, char **argv)
-{
-    char			**unique_words,
-    	 			*file;
-    int 			i =0;
-
-    if(!(file = read_file(argv[1])))
-    	return (write(2, "No file", 8));
-    unique_words = find_unique_words_parser(file);
-    printf("Retrieved line of length %zu\n", strlen(file));
-    while (unique_words[i])
-        printf("Unique words: %s\n",
-        	unique_words[i++]);
-    printf("Amount of unique words : %d\n", i - 1);
-    if (file)
-        free(file);
-    exit(EXIT_SUCCESS);
-}
-
