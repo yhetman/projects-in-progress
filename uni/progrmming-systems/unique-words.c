@@ -167,10 +167,11 @@ int					main(int argc, char **argv)
     if(!(file = read_file(argv[1])))
     	return (write(2, "No file", 8));
     unique_words = find_unique_words_parser(file);
-     printf("Retrieved line of length %zu": strlen(file))
+    printf("Retrieved line of length %zu\n", strlen(file));
     while (unique_words[i])
         printf("Unique words: %s\n",
         	unique_words[i++]);
+    printf("Amount of unique words : %d\n", i - 1);
     if (file)
         free(file);
     exit(EXIT_SUCCESS);
