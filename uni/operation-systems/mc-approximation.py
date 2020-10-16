@@ -1,6 +1,8 @@
 import seaborn as sns
 import numpy as np
 import random
+import matplotlib.pyplot as plt
+
 
 sns.set()
 
@@ -18,9 +20,21 @@ def ecdf(x):
     cdf = (1.0 + np.arange(len(sx))) / len(sx)
     return sx, cdf
 
-def main()
+def read_4bytes():
+    numbers = []
+    with open('example', 'br') as f:
+        data = f.read(4)
+        while data:
+            number = int.from_bytes(data, "big")
+            numbers.append(number)
+            data = f.read(4)
+    return numbers
+
+def main():
+    data = read_4bytes()
     sx, y = ecdf(data)
     plt.plot(sx, y)
+    plt.show()
 
 if __name__ == "__main__":
     main()
