@@ -2,7 +2,7 @@ import seaborn as sns
 import numpy as np
 import random
 import matplotlib.pyplot as plt
-
+import statsmodels.distributions.empirical_distribution import ECDF
 
 sns.set()
 
@@ -30,10 +30,19 @@ def read_4bytes():
             data = f.read(4)
     return numbers
 
+#def move_shuffle():
+
+#def resampline():
+
+
 def main():
     data = read_4bytes()
-    sx, y = ecdf(data)
-    plt.plot(sx, y)
+    ecdf = ECDF(data)
+    
+    # data = move_shuffle(data)
+    # data = resample(data)
+    # sx, y = ecdf(data)
+    # plt.plot(sx, y)
     plt.show()
 
 if __name__ == "__main__":
