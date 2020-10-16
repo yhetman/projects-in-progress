@@ -85,8 +85,21 @@ def scale(x, out_range=(-1, 1), axis=None):
     y = (x - (domain[1] + domain[0]) / 2) / (domain[1] - domain[0])
     return y * (out_range[1] - out_range[0]) + (out_range[1] + out_range[0]) / 2
 
+def count_freq(x): 
+    freq = {} 
+    for item in x: 
+        if (item in freq): 
+            freq[item] += 1
+        else: 
+            freq[item] = 1
+    for key, value in freq.items():
+        print ("% d : % d"%(key, value))
+    
+#    plt.show()
+
 
 def bootstrap(x):
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
     x1, y = ecdf(x)
     n = len(x)
     reps = 10000
@@ -101,21 +114,25 @@ def bootstrap(x):
     #plt.plot(np.arange(1, n+1), upper, 'b', np.arange(1, n+1), lower, 'b');
     bins = np.linspace(np.min(x), np.max(x), n + 1)
     weights = x1.astype(float) / x1.sum()
+    probability = weights.astype(float) / weights.sum()
     histogram, bins = np.histogram(x, bins=bins, weights=weights, density=True)
     bin_centers = 0.5*(bins[1:] + bins[:-1])
-    plt.plot(weights, x1)
+    ax1.plot(probability, x1, c='green', label="Weights")
     #pdf = stats.norm.pdf()
    # print(pdf)
-    plt.figure(figsize=(6, 4))
-    #plt.scatter(range(n), x1, label="Samples")
-    #plt.plot(bin_centers, np.cumsum(x, axis=0), label="Cummmulative sums")
-    plt.plot(bin_centers, histogram, label="PDF")
-   # plt.legend()
+    ax2.plot(bin_centers, histogram, c='black',label="PDF")
+    ax3.scatter(bin_centers, x1, c='r', label="Samples")
+    ax4.plot(bin_centers, np.cumsum(x, axis=0), label="Cummmulative sums")
+    fig.legend()
     plt.show()
 
 def main():
     x = read_4bytes()
-    bootstrap(scale(x))
+    seq = []
+    while len(seq) < 1000000:
+        seq.append(random.choice(x))
+    count_freq(seq)
+    #bootstrap(scale(x))
     #plt.hist(np.asarray(data), 25, histtype='step', color='red', linewidth=1)
     #plt.hist(ys, 25, histtype='step', color='blue', normed=True, linewidth=1)
     # data = move_shuffle(data)
