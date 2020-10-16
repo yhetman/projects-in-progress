@@ -10,47 +10,16 @@ sns.set()
 
 
 def one_more_plot(x):
+    n = 100
+    reps = 1000
 
-    df = 10
-    dist = stats.cauchy()
-    upper = dist.pdf(0)
-
-    with plt.xkcd():
-        plt.figure(figsize=(12,4))
-        plt.subplot(121)
-        plt.plot(x, dist.pdf(x), linewidth=1)
-        plt.axhline(upper, color='grey')
-        px = 1.0
-        plt.arrow(px,0,0,dist.pdf(1.0)-0.01, linewidth=1,
-            head_width=0.2, head_length=0.01, fc='g', ec='g')
-        plt.arrow(px,upper,0,-(upper-dist.pdf(px)-0.01), linewidth=1,
-              head_width=0.3, head_length=0.01, fc='r', ec='r')
-        plt.text(px+.25, 0.2, 'Reject', fontsize=16)
-        plt.text(px+.25, 0.01, 'Accept', fontsize=16)
-        plt.axis([-4,4,0,0.4])
-        plt.title('Rejection sampling concepts', fontsize=20)
-
-        plt.subplot(122)
-    n = 1000
-    df = 10
-    dist = stats.t(df=df)
-    y = stats.chi2(df=df).rvs(n)
-    r = stats.norm(0, df/y).rvs(n)
-    u = np.random.uniform(-4, 4, n)
-    v = u[r < dist.pdf(u)]
-
-    with plt.xkcd():
-        plt.plot(x, dist.pdf(x), linewidth=2)
-
-    # Plot scaled histogram
-        factor = dist.cdf(4) - dist.cdf(-4)
-        hist, bin_edges = np.histogram(v, bins=100, normed=True)
-        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2.
-        plt.step(bin_centers, factor*hist, linewidth=2)
-
-        plt.axis([-4,4,0,0.4])
-        plt.title('Histogram of accepted samples', fontsize=20);
-        plt.show()
+    xb = np.random.choice(x[:,0], n, reps, replace=True)
+    yb = 1/np.arange(1, n+1)[:, None] * np.cumsum(xb, axis=0)
+    upper, lower = np.percentile(yb, [2.5, 97.5], axis=1)
+    plt.plot(np.arange(1, n+1)[:, None], yb, c='grey', alpha=0.02)
+    plt.plot(np.arange(1, n+1), yb[:, 0], c='red', linewidth=1)
+    plt.plot(np.arange(1, n+1), upper, 'b', np.arange(1, n+1), lower, 'b');
+    plt.show()
 
 
 def extrap1d(interpolator):
@@ -95,29 +64,58 @@ def read_4bytes():
     with open('example', 'br') as f:
         data = f.read(4)
         while data:
-            number = int.from_bytes(data, "big")
+            number = int.from_bytes(data, "big", signed=True)
             numbers.append(number)
             data = f.read(4)
     return numbers
 
-#def move_shuffle():
+def resample():
+    n = len(weights)
+    indices = []
+    C = [0.] + [sum(weights[:i+1]) for i in range(n)]
+    u0, j = random(), 0
+    for u in [(u0+i)/n for i in range(n)]:
+        while u > C[j]:
+            j+=1
+        indices.append(j-1)
+    return indices
 
-#def resampline():
+def scale(x, out_range=(-1, 1), axis=None):
+    domain = np.min(x, axis), np.max(x, axis)
+    y = (x - (domain[1] + domain[0]) / 2) / (domain[1] - domain[0])
+    return y * (out_range[1] - out_range[0]) + (out_range[1] + out_range[0]) / 2
 
+
+def bootstrap(x):
+    x1, y = ecdf(x)
+    n = len(x)
+    reps = 10000
+    xb = np.random.choice(x, (n, reps))
+    mb = xb.mean(axis=0)
+    mb.sort()
+    print(np.percentile(mb, [2.5, 97.5]))
+    yb = 1/np.arange(1, n+1)[:, None] * np.cumsum(xb, axis=0)
+    upper, lower = np.percentile(yb, [2.5, 97.5], axis=1)
+    #plt.plot(np.arange(1, n+1)[:, None], yb, c='grey', alpha=0.02)
+    #plt.plot(np.arange(1, n+1), yb[:, 0], c='red', linewidth=1)
+    #plt.plot(np.arange(1, n+1), upper, 'b', np.arange(1, n+1), lower, 'b');
+    bins = np.linspace(np.min(x), np.max(x), n + 1)
+    weights = x1.astype(float) / x1.sum()
+    histogram, bins = np.histogram(x, bins=bins, weights=weights, density=True)
+    bin_centers = 0.5*(bins[1:] + bins[:-1])
+    plt.plot(weights, x1)
+    #pdf = stats.norm.pdf()
+   # print(pdf)
+    plt.figure(figsize=(6, 4))
+    #plt.scatter(range(n), x1, label="Samples")
+    #plt.plot(bin_centers, np.cumsum(x, axis=0), label="Cummmulative sums")
+    plt.plot(bin_centers, histogram, label="PDF")
+   # plt.legend()
+    plt.show()
 
 def main():
-    data = read_4bytes()
-    sx, y = ecdf(data)
-    ecdf_1 = ECDF(data)
-    inv_cdf = extrap1d(interp1d(ecdf_1.y, ecdf_1.x,
-                            bounds_error=False, assume_sorted=True))
-    print(ecdf_1)
-    r = np.random.uniform(0, 1, 100)
-    ys = inv_cdf(r)
-    sx, y = ecdf(data)
-    # one_more_plot(data)
-    plt.plot(sx, np.exp(sx))
-    plt.show()
+    x = read_4bytes()
+    bootstrap(scale(x))
     #plt.hist(np.asarray(data), 25, histtype='step', color='red', linewidth=1)
     #plt.hist(ys, 25, histtype='step', color='blue', normed=True, linewidth=1)
     # data = move_shuffle(data)
@@ -125,7 +123,7 @@ def main():
     # sx, y = ecdf(data)
     #plt.plot(ys)
     #plt.plot(data, c='red')
-    #plt.show()
+    
 
 if __name__ == "__main__":
     main()
