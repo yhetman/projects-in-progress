@@ -4,10 +4,53 @@ import random
 import matplotlib.pyplot as plt
 from statsmodels.distributions.empirical_distribution import ECDF
 from scipy.interpolate import interp1d
-
+import scipy.stats as stats
 
 sns.set()
 
+
+def one_more_plot(x):
+
+    df = 10
+    dist = stats.cauchy()
+    upper = dist.pdf(0)
+
+    with plt.xkcd():
+        plt.figure(figsize=(12,4))
+        plt.subplot(121)
+        plt.plot(x, dist.pdf(x), linewidth=1)
+        plt.axhline(upper, color='grey')
+        px = 1.0
+        plt.arrow(px,0,0,dist.pdf(1.0)-0.01, linewidth=1,
+            head_width=0.2, head_length=0.01, fc='g', ec='g')
+        plt.arrow(px,upper,0,-(upper-dist.pdf(px)-0.01), linewidth=1,
+              head_width=0.3, head_length=0.01, fc='r', ec='r')
+        plt.text(px+.25, 0.2, 'Reject', fontsize=16)
+        plt.text(px+.25, 0.01, 'Accept', fontsize=16)
+        plt.axis([-4,4,0,0.4])
+        plt.title('Rejection sampling concepts', fontsize=20)
+
+        plt.subplot(122)
+    n = 1000
+    df = 10
+    dist = stats.t(df=df)
+    y = stats.chi2(df=df).rvs(n)
+    r = stats.norm(0, df/y).rvs(n)
+    u = np.random.uniform(-4, 4, n)
+    v = u[r < dist.pdf(u)]
+
+    with plt.xkcd():
+        plt.plot(x, dist.pdf(x), linewidth=2)
+
+    # Plot scaled histogram
+        factor = dist.cdf(4) - dist.cdf(-4)
+        hist, bin_edges = np.histogram(v, bins=100, normed=True)
+        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2.
+        plt.step(bin_centers, factor*hist, linewidth=2)
+
+        plt.axis([-4,4,0,0.4])
+        plt.title('Histogram of accepted samples', fontsize=20);
+        plt.show()
 
 
 def extrap1d(interpolator):
@@ -64,21 +107,25 @@ def read_4bytes():
 
 def main():
     data = read_4bytes()
-    print(type(data))
-    ecdf = ECDF(data)
-    inv_cdf = extrap1d(interp1d(ecdf.y, ecdf.x,
+    sx, y = ecdf(data)
+    ecdf_1 = ECDF(data)
+    inv_cdf = extrap1d(interp1d(ecdf_1.y, ecdf_1.x,
                             bounds_error=False, assume_sorted=True))
-    print(ecdf)
+    print(ecdf_1)
     r = np.random.uniform(0, 1, 100)
     ys = inv_cdf(r)
+    sx, y = ecdf(data)
+    # one_more_plot(data)
+    plt.plot(sx, np.exp(sx))
+    plt.show()
     #plt.hist(np.asarray(data), 25, histtype='step', color='red', linewidth=1)
     #plt.hist(ys, 25, histtype='step', color='blue', normed=True, linewidth=1)
     # data = move_shuffle(data)
     # data = resample(data)
     # sx, y = ecdf(data)
-    plt.plot(ys)
-    plt.plot(data, c='red')
-    plt.show()
+    #plt.plot(ys)
+    #plt.plot(data, c='red')
+    #plt.show()
 
 if __name__ == "__main__":
     main()
