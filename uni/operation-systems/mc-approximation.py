@@ -85,6 +85,8 @@ def scale(x, out_range=(-1, 1), axis=None):
     y = (x - (domain[1] + domain[0]) / 2) / (domain[1] - domain[0])
     return y * (out_range[1] - out_range[0]) + (out_range[1] + out_range[0]) / 2
 
+
+
 def count_freq(x): 
     freq = {} 
     for item in x: 
