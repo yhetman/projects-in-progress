@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from statsmodels.distributions.empirical_distribution import ECDF
 from scipy.interpolate import interp1d
 import scipy.stats as stats
+import pandas as pd
+
 
 sns.set()
 
@@ -96,6 +98,10 @@ def count_freq(x):
             freq[item] = 1
     for key, value in freq.items():
         print ("% d : % d"%(key, value))
+    data = freq.items()
+
+    df = pd.DataFrame(data, columns = ['Values', 'Frequency'])
+    return df
     
 #    plt.show()
 
@@ -128,12 +134,20 @@ def bootstrap(x):
     fig.legend()
     plt.show()
 
+
+
 def main():
     x = read_4bytes()
     seq = []
-    while len(seq) < 1000000:
+    n = 1000000
+    while len(seq) < n:
         seq.append(random.choice(x))
-    count_freq(seq)
+    df = count_freq(seq)
+    df['Probability'] = df['Frequency'] / n
+    with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+        print(df[df['Probability'] > 0.0001]);
+    #plt.hist(df['Values'], df['Probability'])
+    hist = df.hist()
     #bootstrap(scale(x))
     #plt.hist(np.asarray(data), 25, histtype='step', color='red', linewidth=1)
     #plt.hist(ys, 25, histtype='step', color='blue', normed=True, linewidth=1)
