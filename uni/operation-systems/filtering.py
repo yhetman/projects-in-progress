@@ -56,7 +56,7 @@ def make_subsample(num_items, x):
 def main():
 	N = 100
 	x  = read_4bytes()
-	make_subsample(N, x)
+	return make_subsample(N, x)
 
 
 if __name__ == "__main__":
