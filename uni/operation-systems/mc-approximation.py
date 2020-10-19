@@ -71,6 +71,7 @@ def read_4bytes():
             data = f.read(4)
     return numbers
 
+
 def resample():
     n = len(weights)
     indices = []
@@ -138,6 +139,7 @@ def bootstrap(x):
 
 def main():
     x = read_4bytes()
+    
     seq = []
     n = 1000000
     while len(seq) < n:
