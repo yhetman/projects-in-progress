@@ -13,6 +13,7 @@ def read_4bytes():
             data = f.read(4)
     return numbers
 
+
 def count_frequency(x): 
     freq = {} 
     for item in x: 
@@ -52,10 +53,24 @@ def make_subsample(num_items, x):
     return resulting_sequence
 
     
+def check_the_pid(subsample):
+    proc_file = str(current_process().name) + ".txt"
+    pid = os.getpid()
+    f = open(proc_file, "a+")
+    for i in subsample:
+        if i % (3 * pid) == 0:
+            print(i)
+            f.write("%d\r\n" % (i))
+    f.close()
+    return pid
+
 
 def main():
+    PROCESSES = 4
+
 	cdef unsigned int N = 100
     cdef numpy.ndarray x
+    
 	x  = read_4bytes()
 	make_subsample(N, x)
 
