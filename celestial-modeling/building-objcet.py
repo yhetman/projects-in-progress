@@ -19,5 +19,6 @@ wcs_input_dict = {
 }
 wcs_helix_dict = WCS(wcs_input_dict)
 
-lattitude = 50.45
+latitude = 50.45
+longtitude = 30.516667
 
