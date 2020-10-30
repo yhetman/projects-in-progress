@@ -18,3 +18,6 @@ wcs_input_dict = {
     'NAXIS2': 1024
 }
 wcs_helix_dict = WCS(wcs_input_dict)
+
+lattitude = 50.45
+
