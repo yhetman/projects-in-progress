@@ -19,6 +19,20 @@ wcs_input_dict = {
 }
 wcs_helix_dict = WCS(wcs_input_dict)
 
-latitude = 50.45
-longtitude = 30.516667
+
+class Coords(object):
+	def __init__(self, latitude, longtitude):
+		super(Coords, self).__init__()
+		self.latitude = latitude
+		self.longtitude = longtitude
+
+class HorizontalCoords(object):
+	def __init__(self, ra, dec):
+		super(HorizontalCoords, self).__init__()
+		self.ra = ra
+		self.dec = dec
+		self.Z = 90 - dec		
+		
+person_coords = Coords(50.45, 30.516667)
+star = 
 
