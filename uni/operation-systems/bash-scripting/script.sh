@@ -76,5 +76,4 @@ cd $home_path/$dir
 get_dir $r1 $folder
 
 
-$script_path/process_call.sh
-
+python3 $script_path/processes_implementation.py
