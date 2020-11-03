@@ -1,3 +1,5 @@
+#!/home/yhetman/anaconda3/bin/python3
+
 import time
 import os
 import numpy as np
@@ -7,12 +9,12 @@ from datetime import datetime, timedelta
 from multiprocessing import current_process
 from functools import partial
 from concurrent.futures import ProcessPoolExecutor
-
+import sys
 
 def input_file_names(num):
 	files = []
 	for i in range(num):
-		new_file = str(input("Enter file name : "))
+		new_file = "example" #str(input("Enter file name : "))
 		if len(new_file) > 1:
 			files.append(new_file)
 		else:
@@ -22,7 +24,7 @@ def input_file_names(num):
 
 
 def several_files():
-	num = int(input("How many files to use? "))
+	num = 1 #int(input("How many files to use? "))
 	if num > 0:
 		return input_file_names(num) , num
 	else:
@@ -98,7 +100,10 @@ def count_timedelta(function, args=[]):
 
 
 def multiprocessing_start():
-	PROCESSES = 8
+	if len(sys.argv) > 1:
+		PROCESSES = int(sys.argv[1])
+	else:
+		PROCESSES = 8
 	N = 100
 	files, number_of_files = several_files()
 	parameters = [(i, N) for i in files]
