@@ -33,7 +33,6 @@ def main():
 	context = input("Input a context to search for : ")
 	file_n = int(input("How many files to look throught? "))
 	files = input_file_names(file_n)
-	files *= 4
 	for i, filename in enumerate(files):
 		args.append((context, filename, i))
 	variant = int(input("Enter 1 to use multiprocessing or press 2 to use multithreading : "))
