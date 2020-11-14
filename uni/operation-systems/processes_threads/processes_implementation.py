@@ -14,7 +14,7 @@ import sys
 def input_file_names(num):
 	files = []
 	for i in range(num):
-		new_file = "example" #str(input("Enter file name : "))
+		new_file = "file" #str(input("Enter file name : "))
 		if len(new_file) > 1:
 			files.append(new_file)
 		else:
@@ -99,7 +99,7 @@ def count_timedelta(function, args=[]):
 	return resulting, delta_t
 
 
-def multiprocessing_start():
+def main():
 	if len(sys.argv) > 1:
 		PROCESSES = int(sys.argv[1])
 	else:
@@ -114,4 +114,4 @@ def multiprocessing_start():
 		pool.map(parfunction, parameters)
 
 if __name__ == "__main__":
-	multiprocessing_start()
+	main()
