@@ -37,7 +37,7 @@ np.savetxt('M0', M0, fmt='%d')
 number = int(input("Скільки файлів з матрицями сгенерувати? "))
 for i in range(number):
 	name = 'M'+str(i + 1)
-	M = np.random.randint(1000, size=(20, 20))
+	M = np.random.randint(1000, size=(500, 500))
 	np.savetxt(name, M, fmt='%d')
 for i in range(number):
 	process = Process(target=multiplying_matrixes, args=(i,))
