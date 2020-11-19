@@ -1,3 +1,36 @@
+/*
+   GRAPHICS DEMO FOR Borland C++ 3.0
+
+   Copyright (c) 1987,88,91 Borland International. All rights reserved.
+
+   From the command line, use:
+
+		bcc bgidemo graphics.lib
+
+*/
+
+#ifdef __TINY__
+#error BGIDEMO will not run in the tiny model.
+#endif
+
+#include <dos.h>
+#include <math.h>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+
+#include <graphics.h>
+
+#define ESC	0x1b			/* Define the escape key	*/
+#define TRUE	1			/* Define some handy constants	*/
+#define FALSE	0			/* Define some handy constants	*/
+#define PI	3.14159 		/* Define a value for PI	*/
+#define ON	1			/* Define some handy constants	*/
+#define OFF	0			/* Define some handy constants	*/
+
+#define NFONTS 11
+
 char *Fonts[NFONTS] = {
   "DefaultFont",   "TriplexFont",   "SmallFont",
   "SansSerifFont", "GothicFont", "ScriptFont", "SimplexFont", "TriplexScriptFont",

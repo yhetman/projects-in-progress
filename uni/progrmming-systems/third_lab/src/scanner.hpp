@@ -1,11 +1,3 @@
-/**
- * @file scanner.hpp
- * @author <a href="mailto:a.hakimnejad@mrl-spl.ir">Amirhossein Hakimnejad</a>
- *
- * @date 2018 Nov
- */
-
-
 #pragma once
 
 #include <iostream>

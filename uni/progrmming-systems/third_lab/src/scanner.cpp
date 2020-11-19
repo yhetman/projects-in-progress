@@ -1,11 +1,3 @@
-/**
- * @file scanner.cpp
- * @author <a href="mailto:a.hakimnejad@mrl-spl.ir">Amirhossein Hakimnejad</a>
- *
- * @date 2018 Nov
- */
-
-
 #include "scanner.hpp"
 
 using std::cout;

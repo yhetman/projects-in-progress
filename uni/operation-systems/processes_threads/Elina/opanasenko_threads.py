@@ -1,4 +1,5 @@
 import time
+import sys
 import numpy as np
 from datetime import datetime, timedelta
 from threading import Thread
@@ -34,11 +35,13 @@ def multiplying_matrixes(index):
 threads = []
 M0 = np.random.randint(1000, size=(20, 20))
 np.savetxt('M0', M0, fmt='%d')
-number = int(input("Скільки файлів з матрицями сгенерувати? "))
+number = int(sys.argv[1])
+print("Генеруемо %d файлів \n" % (number))
 for i in range(number):
 	name = 'M'+str(i + 1)
 	M = np.random.randint(1000, size=(20, 20))
 	np.savetxt(name, M, fmt='%d')
+print("Запускаємо %d потоків \n" % (number))
 for i in range(number):
 	thread = Thread(target=multiplying_matrixes, args=(i,))
 	threads.append(thread)
