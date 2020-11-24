@@ -2,6 +2,6 @@
 
 int main()
 {
-  lexicalAnalyze("program.txt");
+  lexicalAnalyze("scanner.cpp");
   return 0;
 }

@@ -1,8 +1,10 @@
 #!/bin/bash
-DESKTOP=/users/user/Рабочий\ стол/
-GENDIR=general_directory
 
+DESKTOP="/home/user/Рабочий стол/"
+GENDIR=general_directory
+DIR=$DESKTOP$GENDIR
 VARIANT=19
+
 R=8
 N1=42
 N2=43
@@ -17,7 +19,7 @@ t2=-4
 
 function get_dir ()
 {
-	cd $DESKTOP$GENDIR
+	cd $DIR
 	index=1
 	while true;
 	do
@@ -31,18 +33,18 @@ function get_dir ()
 
 echo "Varaint = "$VARIANT
 
-DIR=DESKTOP$GENDIR
+
 if [[ ! -e $DIR ]] ; then
 		mkdir $DIR
 	elif [[ ! -d $DIR ]] ; then
-		echo "$1 already exists but is not a directory" 1>&2
+		echo "$DIR already exists but is not a directory" 1>&2
 	fi
 if [[ -e $DIR ]]; then
 	cd $DIR
 fi
 
 index=1
-while true
+while true;
 do
 	mkdir -p ./$index
 	cd ./$index
