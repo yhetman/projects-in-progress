@@ -1,6 +1,6 @@
 //comentario 
 /*coment*/
-# include "lex.h"
+#include "lex.h"
 void main(){
 	int a=5;//comentario
 	int b = 6.1; /* comentario */

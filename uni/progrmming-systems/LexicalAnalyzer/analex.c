@@ -100,19 +100,7 @@ int main (int argc, const char * argv[]) {
 			reset(t_automates);
 			continue;
 		}
-		
-		// Si es el fin del archivo dejo de leer.
-//		char siguiente; 
-//		if((siguiente = getc(source)) == EOF){
-//			fprintf(stdout, "Siguiente es EOF");
-//			break;
-//		}else{
-//			fseek(source, -1, SEEK_CUR);
-//		}
-	}	
-	
-//	char asd='s';
-//	fprintf(stdout, "%d",(int)asd);
+
 	fclose(source);
 	
     return 0;
