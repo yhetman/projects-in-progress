@@ -1,18 +1,18 @@
-#include "analex.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <fcntl.h>
+#include "lexer.h"
+#include "t_automate.h"
 
-char buf[BUFSIZ];
 
-int main (int argc, const char * argv[]) {
+int 			main(int argc, const char * argv[]) {
+	
+	char 		c;
+
+	t_automate 	t_automates[numberAutomates];
 	
     if (argc != 2) { 
 		fprintf(stderr, "Usage: %s source code\n", argv[0]);
 		return -1;
 	}
-	if((source = fopen(argv[1],"r")) == NULL){
+	if((source = fopen(argv[1],"r")) == NULL) {
 		fprintf(stderr, "Error al abrir el archivo: %s", argv[1]);
 		return -1;
 	}
@@ -25,7 +25,6 @@ int main (int argc, const char * argv[]) {
 		return -1;
 	}
 
-	t_automate t_automates[numberAutomates];
 	t_automates[0].function = t_automateComment;
 	t_automates[1].function = t_automateIdentificator;
 	t_automates[2].function = t_automateLogicalOperator;
@@ -40,12 +39,8 @@ int main (int argc, const char * argv[]) {
 	t_automates[11].function = t_automatePreprosessor;
 	
 	reset(t_automates);
-	
-	char c;
-	
 	while ((c = getc(source)) != EOF) {
 		if ((int)c == 10) {
-			//fprintf(stdout, "enter!!!!");
 		}
 		
 		if (t_automates[0].function(&t_automates[0], c) == 1) {
@@ -100,12 +95,10 @@ int main (int argc, const char * argv[]) {
 			reset(t_automates);
 			continue;
 		}
-
-	fclose(source);
-	
-    return 0;
+		fclose(source);
+		return 0;
+	}
 }
-
 
 
 
