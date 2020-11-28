@@ -1,11 +1,10 @@
 #!/bin/bash
 
-HOME=/home/yhetman
-DESKTOP=$HOME/Desktop/
+HOME=/home/user
+DESKTOP=$HOME/Desktop
 GENDIR=general_directory
-DIR=$DESKTOP$GENDIR
+DIR=$DESKTOP/$GENDIR
 VARIANT=19
-SCRIPT_PATH=$HOME/Рабочий\ стол/
 
 R=8
 N1=42
@@ -54,9 +53,9 @@ function tarring()
 {
 	go_to_directory $1
 	echo "[INFO] Creating tar archive archive_$1_$2 from files in foler `pwd` ..."
-	tar -czf archive_$1_$2.tar.gz M*
+	tar -czf archive_$1_$2.tar.gz M* 2>/dev/null
 	echo "[INFO] Moving archive archive_$1_$2 to folder `pwd`/../$2 ..."
-	mv archive_$1_$2.tar.gz ../
+	mv archive_$1_$2.tar.gz ../ 2>/dev/null
 }
 
 
@@ -67,9 +66,9 @@ function sorting()
 	destination=`pwd`
 	go_to_directory $1
 	echo "[INFO] Concatenate content of files..."
-	cat ./M* > input.txt
+	cat ./M* > input.txt 2>/dev/null
 	echo "[INFO] Sorting..."
-	sort -nr -o $destination/output$1.txt input.txt
+	sort -nr -o $destination/output$1.txt input.txt 2>/dev/null
 	rm input.txt
 }
 
@@ -105,12 +104,12 @@ function add_file_to_archive()
 	go_to_directory $1
 	dest=`pwd`
 	echo "[INFO] Extracting archive..."
-	tar -xzf $archive_loc
+	tar -xzf $archive_loc 2>/dev/null
 	rm $archive_loc
-	mv $loc .
+	mv $loc . 2>/dev/null
 	echo "[INFO] Adding file to archive..."
-	tar -C ./ -czf $dest/archive_$1_$2.tar.gz *.txt M*
-	mv $dest/archive_$1_$2.tar.gz ../
+	tar -C ./ -czf $dest/archive_$1_$2.tar.gz *.txt M* 2>/dev/null
+	mv $dest/archive_$1_$2.tar.gz ../ 2>/dev/null
 }
 
 
@@ -120,12 +119,12 @@ function extract_archive()
 	go_to_directory $2
 	destin=`pwd`
 	echo "[INFO] Extracting archive to folder $destin..."
-	tar -xzf $archive_location -C $destin
+	tar -xzf $archive_location -C $destin 2>/dev/null
 }
 
 echo "[VARIANT] : "$VARIANT
 
-check_folder_existence $DESKTOP
+cheвотck_folder_existence $DESKTOP
 check_folder_existence $DIR
 
 index=1
@@ -146,11 +145,11 @@ go_to_directory $r1
 echo "[INFO] Starting implementation of processes..."
 echo ""
 
-python $DESKTOP/opanasenko_processes.py $N1
+python3 ~/Рабочий\ стол/opanasenko_processes.py $N1
 go_to_directory $r2
 echo "[INFO] Starting implementation of threads..."
 echo ""
-python $DESKTOP/opanasenko_threads.py $N2
+python3 ~/Рабочий\ стол/opanasenko_threads.py $N2
 tarring $r1 $a1
 tarring $r2 $a2
 sorting $r1 $t1
