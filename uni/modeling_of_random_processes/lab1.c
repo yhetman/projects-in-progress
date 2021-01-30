@@ -6,31 +6,30 @@
 /*   By: yhetman <yhetman@student.unit.ua>                                    */
 /*                                                                            */
 /*   Created: 2021/01/30 19:38:46 by yhetman                                  */
-/*   Updated: 2021/01/30 19:59:19 by yhetman                                  */
+/*   Updated: 2021/01/30 20:09:41 by yhetman                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 
-int *multicong(unsigned int alpha, int M, unsigned int beta , int *randomNums, int amount)
+double *multicong(unsigned int alpha, unsigned int M, unsigned int beta , double *randomNums, int amount)
 {
 	int j;
 	
 	j = 0;
 	randomNums[j] = alpha;
 	while (++j < amount)
-		randomNums[j] = (randomNums[j - 1] * beta) % M;
+		randomNums[j] = (double)((int)(randomNums[j - 1] * beta) % M) / M;
 	return (randomNums);
 }
 
 int main()
 {
-	unsigned int	alpha, beta;
-	int				M,
-					amount,
+	unsigned int	M, alpha, beta;
+	int				amount,
 					i;
-	int				*randomNums;
+	double			*randomNums;
 
 
 	i = 0;
@@ -38,12 +37,12 @@ int main()
 	beta = 9;
 	M = 1000000;
 	amount = 100000;
-	randomNums = (int *)malloc(amount * sizeof(int));
+	randomNums = (double *)malloc(amount * sizeof(double));
 	while (i++ < amount)
 		randomNums = multicong(alpha, M, beta, randomNums, amount);
 	i = 0;
 	while(i++ < amount)
-		printf("|%d|%d|\n", i, randomNums[i]);
+		printf("|%d|%f|\n", i, randomNums[i]);
 	free(randomNums);
 	return (0);
 }
