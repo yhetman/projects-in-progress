@@ -3,9 +3,9 @@ import math
 import matplotlib.pyplot as plt
 
 def dat(n):  
-    b = 1953125
-    M = 524288
-    a0 = 7
+    b = 77
+    M = 100000
+    a0 = 8
     bvv = [0]*n
     a = [0]*(n+1)
     a[0] = a0
@@ -75,7 +75,7 @@ delta = [abs(Rp[0] - 1/12)]+[abs(Rp[i]) for i in range(1,t)]
 
 print("delta R =", delta)
 
-print(1.65*(2)**0.5/(12*(N-1)**0.5),1.65/(12*(N-1)**0.5))
+print(1.65*(2)**0.5/(12*(N-1)**0.5), 1.65/(12*(N-1)**0.5))
 
 MomPerev = abs(avg - 0.5) / (1 / 12 / N)**0.5
 
@@ -84,7 +84,7 @@ var = 0
 for i in range(N):
     var += (bvv[i] - avg)**2
 var /= N - 1
-print("Variance =" , var)
+print("Variance =" , var, avg)
 TeoDis = (0.0056 / N + 0.0028/(N**2) - 0.0083/(N**3))
 print("Teoretical Dispersion", TeoDis)
 DisPerev = (N - 1) * abs(var - 1 / 12) / (0.0056 / N + 0.0028/(N**2) - 0.0083/(N**3))**0.5 / N
