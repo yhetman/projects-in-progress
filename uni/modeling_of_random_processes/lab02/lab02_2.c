@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                                            */
-/*   lab02.c                                                                  */
+/*   lab02_2.c                                                                */
 /*                                                                            */
 /*   By: yhetman <yhetman@student.unit.ua>                                    */
 /*                                                                            */
-/*   Created: 2021/02/12 17:46:02 by yhetman                                  */
-/*   Updated: 2021/02/12 17:46:03 by yhetman                                  */
+/*   Created: 2021/02/12 18:41:13 by yhetman                                  */
+/*   Updated: 2021/02/12 18:41:14 by yhetman                                  */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 
@@ -47,25 +48,34 @@ int main(int argc, char **argv)
 {
 	int				amount,
 					j,
-					alpha;
+					i;
 	double			*rand_vars;
 	time_t			seconds;
-	float			probability,
-					p;
+	float			H_array[5];
+	int				s[4];
 
-
-	if (argc < 3)
-	{
-		printf("Usage:\n\n./lab02 {Number of elements to generate} {Probability to apply}\n");
-		exit(1);
-	}
+	bzero(&s);
+	H_array = {0, 0.5, 0.75, 0.875, 1};
 	alpha = 0;
 	amount = atoi(argv[1]);
-	p = atof(argv[2]);
-	probability = 0;
+	//p = atof(argv[2]);
+	//probability = 0;
+
+
+	// if (argc < 3)
+	// {
+	// 	printf("Usage:\n\n./lab02_2 {Number of elements to generate} {Probability to apply}\n");
+	// 	exit(1);
+	// }
+
 	rand_vars = multicong_generator(amount);
-    for (j = 0;j < 1000000; j++)
+
+    for (j = 0;j < amount; j++)
     {
+    	i = 0;
+    	while (i < 5)
+    		if (rand_vars[j] > H_array[i] && rand_vars[j] < H_array[i + 1 ])
+    			s[i] += 1;
     	time(&seconds);
     	alpha = (int)seconds % amount;
     	// printf("%d\n",alpha);
