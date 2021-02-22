@@ -20,8 +20,8 @@
 # include <time.h>
 # include "../libft/libft.h"
 
-# define WIDTH 		800
-# define HEIGHT		600
+# define WIDTH 		1000
+# define HEIGHT		1000
 # define SQR(x) (x * x)
 # define JULIA 		"julia_set"
 

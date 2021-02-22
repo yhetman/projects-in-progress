@@ -33,18 +33,15 @@ int			init_mlx(t_env *e)
 
 void			init(t_env *e)
 {
-	time_t	*timestamp;
-
-	timestamp = NULL;
-	srand48(time(timestamp));
 	e->function = julia_math;
-	e->c_re = (-1)*drand48(); //-0.70176f;
-	e->c_im =(-1)*drand48(); //-0.3842f;
+	srand48(time(NULL)*time(NULL));
+	e->c_re = -1 + 2 * drand48(); //-0.70176f;
+	e->c_im = 1 - 2 * drand48(); //-0.3842f;
 	e->min_x = -1.5f;
-	e->max_x = 1.0f;
+	e->max_x = 1.5f;
 	e->min_y = -1.0f;
 	e->max_y = 1.0f;
-	e->infinity = 100;
+	e->infinity = 3000;
 }
 
 
