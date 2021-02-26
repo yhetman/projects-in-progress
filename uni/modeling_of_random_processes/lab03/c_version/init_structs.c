@@ -6,7 +6,7 @@
 /*   By: yhetman <yhetman@student.unit.ua>                                    */
 /*                                                                            */
 /*   Created: 2021/02/15 15:29:16 by yhetman                                  */
-/*   Updated: 2021/02/15 15:29:20 by yhetman                                  */
+/*   Updated: 2021/02/26 14:01:36 by yhetman                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int			init_mlx(t_env *e)
 void			init(t_env *e)
 {
 	e->function = julia_math;
-	srand48(time(NULL)*time(NULL));
-	e->c_re = -1 + 2 * drand48(); //-0.70176f;
-	e->c_im = 1 - 2 * drand48(); //-0.3842f;
+//	srand48(time(NULL)*time(NULL));
+//	e->c_re = -1 + 2 * drand48(); //-0.70176f;
+//	e->c_im = 1 - 2 * drand48(); //-0.3842f;
 	e->min_x = -1.5f;
 	e->max_x = 1.5f;
 	e->min_y = -1.0f;
 	e->max_y = 1.0f;
-	e->infinity = 3000;
+//	e->infinity = 3000;
 }
 
 

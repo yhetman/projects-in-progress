@@ -6,7 +6,7 @@
 /*   By: yhetman <yhetman@student.unit.ua>                                    */
 /*                                                                            */
 /*   Created: 2021/02/15 15:24:20 by yhetman                                  */
-/*   Updated: 2021/02/15 15:24:22 by yhetman                                  */
+/*   Updated: 2021/02/26 12:38:35 by yhetman                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int		julia_math(t_env *e, int x, int y)
 
 		srand48(time(NULL));
 		stoch = drand48();
-		x_temp = (mx * mx - my * my) + e->c_re + stoch;
-		my = 2.0f * mx * my + e->c_im + stoch; 
+		x_temp = (mx * mx - my * my) + e->c_re; //+ stoch;
+		my = 2.0f * mx * my + e->c_im;// + stoch; 
 		mx = x_temp;
 		if ((mx * mx + my * my) > 4.0f)
 			break ;

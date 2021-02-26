@@ -6,7 +6,7 @@
 /*   By: yhetman <yhetman@student.unit.ua>                                    */
 /*                                                                            */
 /*   Created: 2021/02/15 15:26:46 by yhetman                                  */
-/*   Updated: 2021/02/15 15:26:49 by yhetman                                  */
+/*   Updated: 2021/02/26 13:18:14 by yhetman                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,21 @@ static void		more_colors(t_env *e, int depth)
 {
 	if (e->choose_color == 2)
 	{
-		e->red = (SQR(depth) * 30) % 255;
-		e->blue = (SQR(depth) * 80) % 255;
-		e->green = (depth * 40) % 255;
+		e->red = (SQR(depth) * 80) % 255;
+		e->blue = (SQR(depth) * 40) % 255;
+		e->green = (depth * 30) % 255;
 	}
 	else if (e->choose_color == 3)
 	{
 		e->red = (depth * 5) % 255;
 		e->blue = (depth * 5) % 255;
 		e->green = (depth * 5) % 255;
+	}
+	else if (e->choose_color == 4)
+	{
+		e->blue = (depth % 8 * 32);
+		e->green = (depth % 16 * 16);
+		e->red = (depth % 32 * 8);
 	}
 }
 
